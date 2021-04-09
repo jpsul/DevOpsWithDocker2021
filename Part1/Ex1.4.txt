@@ -1,0 +1,45 @@
+/** Longer solution 
+ * 1. Run the container
+ * 2. Attach into container and install curl
+ * 3. Run the command to start the required process
+ **/
+$ docker run -it -d ubuntu
+aa71232710ea9a14af25e5554a45b091a2f7676d453e5dc08cfe2a27a268d499
+$ docker attach aa71
+root@aa71232710ea:/# apt-get update; apt-get -y install curl
+
+root@aa71232710ea:/# [ctrl-p ctrl-q] read escape sequence
+
+$ docker exec -it aa71 sh -c 'echo "Input website:"; read website; echo "Searching..."; sleep 1; curl http://$website;
+Input website:
+helsinki.fi
+Searching...
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://www.helsinki.fi/">here</a>.</p>
+</body></html>
+
+$ 
+
+/* -------------------------------- */
+
+/** Short solution
+ *  This solution does run the container and the command and stops the container afterwards.
+ **/
+$ docker run -it ubuntu sh -c 'apt-get update; apt-get -y install curl; echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website;'
+...
+Input website:
+helsinki.fi
+Searching...
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://www.helsinki.fi/">here</a>.</p>
+</body></html>
+
+$
